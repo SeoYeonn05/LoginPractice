@@ -22,23 +22,23 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.widget.CustomButton
 
-class NumberLoginPage {
-    @Composable
-    fun NumberLoginUi(navController: NavController) {
-        BasicUi(
-            true,
-            navController,
-            "Login with number",
-            "Your number will safe with us. We won;t share your details with anyone.",
-            ui = { NumberLoginContent(navController) },
-            backAction = {
-                navController.popBackStack()
-            })
-    }
+@Composable
+fun NumberLoginUi(navController: NavController) {
+    BasicUi(
+        true,
+        navController,
+        "Login with number",
+        "Your number will safe with us. We won;t share your details with anyone.",
+        ui = { NumberLoginContent(navController) },
+        backAction = {
+            navController.popBackStack()
+        })
 }
+
 
 // Composable이 클래스 안에 있는 것과 밖에 있는 게 차이가 있을까?
 @Composable
@@ -57,7 +57,7 @@ fun NumberLoginContent(navController: NavController) {
         DuckieTextField()
         Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Next") {
-            //navController.navigate(Rout)
+            navController.navigate(Route.EnterEmail.routes)
         }
         Spacer(modifier = Modifier.height(30.dp))
         Row() {

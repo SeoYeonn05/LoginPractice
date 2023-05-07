@@ -31,7 +31,7 @@ fun BasicUi(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
+/*        topBar = {
             CenterAlignedTopAppBar(
                 title = { Icon(imageVector = Icons.Default.Face, contentDescription = "Logo") },
                 navigationIcon = {
@@ -48,7 +48,7 @@ fun BasicUi(
                     containerColor = Color.Transparent
                 )
             )
-        }
+        }*/
     ) {
         Box(
             modifier = Modifier
@@ -62,26 +62,7 @@ fun BasicUi(
                     .padding(horizontal = 30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(
-                        "$title",
-                        style = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 25.sp,
-                        )
-                    )
-                    Text(
-                        "$content",
-                        style = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.Light,
-                            fontSize = 15.sp,
-                        )
-                    )
-                }
+                MyAppBar(title, content, navController)
                 Spacer(modifier = Modifier.height(20.dp))
                 // 동적으로 카드 크기 조정은 어떻게 하는걸까?
                 Card(

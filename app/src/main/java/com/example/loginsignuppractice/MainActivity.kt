@@ -16,10 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.loginsignuppractice.page.NumberLoginPage
-import com.example.loginsignuppractice.page.SignInPage
-import com.example.loginsignuppractice.page.SignUpPage
-import com.example.loginsignuppractice.page.StartUI
+import com.example.loginsignuppractice.page.*
 import com.example.loginsignuppractice.ui.theme.LoginSignUpPracticeTheme
 import com.example.loginsignuppractice.ui.theme.backgroundColor
 import java.util.*
@@ -57,11 +54,15 @@ fun Screen() {
             SignUpPage().SignUpUi(navController = navController)
         }
         composable(Route.NumberLogin.routes) {
-            NumberLoginPage().NumberLoginUi(navController =  navController)
+            NumberLoginUi(navController =  navController)
+        }
+        composable(Route.EnterEmail.routes) {
+            EnterEmail(navController =  navController)
         }
         composable(Route.Main.routes) {
             Main(navController =  navController)
         }
+
     }
 }
 
