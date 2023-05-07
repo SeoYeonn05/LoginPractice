@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun CustomButton(text: String) {
+fun CustomButton(text: String, onClickAction: () -> Unit) {
     Button(
-        onClick = {},
+        onClick = onClickAction,
         modifier = Modifier
             .wrapContentSize()
             .fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(5.dp),
         ) {
         Text(
             "$text",

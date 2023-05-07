@@ -1,48 +1,52 @@
 package com.example.loginsignuppractice.page
 
 import BasicUi
-import IconTextField
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
+import EmailTextField
+import PasswordTextField
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.widget.CustomButton
 
 class SignInPage {
     @Composable
-    fun SignInUi() {
+    fun SignInUi(navController: NavController) {
         BasicUi(
+            navController,
             "Sign In",
-            "Sign in to discover amazing near around you."
-        ) { SignInContent() }
+            "Sign in to discover amazing near around you.",
+            ui = { SignInContent(navController) },
+            backAction = {
+                navController.popBackStack()
+        })
     }
 }
 
 @Composable
-fun SignInContent() {
+fun SignInContent(navController: NavController) {
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var pw by remember { mutableStateOf(TextFieldValue("")) }
 
-    Column() {
-        IconTextField(
-            Icons.Default.Email,
-            "Email",
-            email
-        )
-        IconTextField(
-            Icons.Default.Lock,
-            "Password",
-            pw
-        )
-        CustomButton(text = "Sign In")
-        TextButton(
-            onClick = {}
-        ) {
-            Text("Forgot Password?")
-        }
+
+    EmailTextField(email)
+    Spacer(modifier = Modifier.height(10.dp))
+
+    PasswordTextField(pw)
+    Spacer(modifier = Modifier.height(20.dp))
+    CustomButton(text = "Sign In"){
+
+    }
+    TextButton(
+        onClick = {}
+    ) {
+        Text("Forgot Password?")
     }
 }
+

@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 fun Screen() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Route.SignUp.routes) {
+    NavHost(navController = navController, startDestination = Route.Start.routes) {
         composable(Route.Start.routes) {
             StartUI(navController = navController)
         }

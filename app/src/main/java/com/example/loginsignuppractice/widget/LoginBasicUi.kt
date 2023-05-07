@@ -14,13 +14,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.backgroundColor
 import com.example.loginsignuppractice.widget.CustomButton
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BasicUi(title: String, content: String, ui: @Composable ()-> Unit) {
+fun BasicUi(
+    navController: NavController,
+    title: String,
+    content: String,
+    ui: @Composable () -> Unit,
+    backAction: () -> Unit
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -28,7 +36,7 @@ fun BasicUi(title: String, content: String, ui: @Composable ()-> Unit) {
                 title = { Icon(imageVector = Icons.Default.Face, contentDescription = "Logo") },
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = backAction
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -75,6 +83,7 @@ fun BasicUi(title: String, content: String, ui: @Composable ()-> Unit) {
                     )
                 }
                 Spacer(modifier = Modifier.height(30.dp))
+                // 동적으로 카드 크기 조정은 어떻게 하는걸까?
                 Card(
                     colors = CardDefaults.cardColors(
                         Color.White
@@ -104,7 +113,7 @@ fun BasicUi(title: String, content: String, ui: @Composable ()-> Unit) {
                             ) {
                                 Text("Sign Up")
                             }*/
-
+                            ui()
                         }
                     }
                 }
@@ -120,7 +129,8 @@ fun BasicUi(title: String, content: String, ui: @Composable ()-> Unit) {
                         .fillMaxWidth(),
                     colors = CardDefaults.cardColors(
                         Color.White
-                    )) {
+                    )
+                ) {
                     ConnectIcon()
 
                 }

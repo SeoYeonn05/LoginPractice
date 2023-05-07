@@ -8,24 +8,27 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.widget.CustomButton
 
 class SignUpPage {
     @Composable
     fun SignUpUi(navController: NavController) {
         BasicUi(
+            navController,
             "Sign Up",
-            "Sign up to discover amazing near around you."
-        ) { SignUpContent(navController) }
+            "Sign up to discover amazing near around you." ,
+            ui = { SignUpContent(navController) },
+            backAction = {
+                navController.popBackStack()
+            })
     }
 
     @Composable
@@ -46,7 +49,9 @@ class SignUpPage {
         Spacer(modifier = Modifier.height(10.dp))
         PasswordTextField(pw)
         Spacer(modifier = Modifier.height(30.dp))
-        CustomButton(text = "Sign Up")
+        CustomButton(text = "Sign Up"){
+
+        }
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             "By signing up you accpet out Terms of SErvice and",
