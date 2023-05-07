@@ -1,7 +1,7 @@
 package com.example.loginsignuppractice
 
 sealed class Route(val routes: String){
-    object Main: Route("Main")
+    object Start: Route("Start")
     object SignIn: Route("SignIn")
     object SignUp: Route("SignUp")
     object Login: Route("Login")
