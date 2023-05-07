@@ -23,15 +23,6 @@ fun MyAppBar(){
                 color = mainColor,
             )
     ){
-        IconButton(onClick = {}) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back"
-            )
-            Icon(
-                imageVector = Icons.Default.Face,
-                contentDescription = "Logo"
-            )
-        }
+
     }
 }
