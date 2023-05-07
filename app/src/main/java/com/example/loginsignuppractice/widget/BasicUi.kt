@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.backgroundColor
-import com.example.loginsignuppractice.widget.CustomButton
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BasicUi(
+    loginPage: Boolean,
     navController: NavController,
     title: String,
     content: String,
@@ -82,7 +82,7 @@ fun BasicUi(
                         )
                     )
                 }
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 // 동적으로 카드 크기 조정은 어떻게 하는걸까?
                 Card(
                     colors = CardDefaults.cardColors(
@@ -117,35 +117,44 @@ fun BasicUi(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(30.dp))
-                ConnectLine()
-                Spacer(modifier = Modifier.height(20.dp))
-                Card(
-                    modifier = Modifier
-                        .background(
-                            color = Color.White,
-                            shape = RoundedCornerShape(25.dp)
-                        )
-                        .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        Color.White
-                    )
-                ) {
-                    ConnectIcon()
-
-                }
-                Spacer(modifier = Modifier.height(40.dp))
-                TextButton(
-                    onClick = {},
-                ) {
-                    Text(
-                        "SKIP", style = TextStyle(
-                            color = Color.DarkGray,
-                            fontWeight = FontWeight.Bold
-                        )
-                    )
+                if(loginPage){
+                    SocialLoginButton(navController)
                 }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SocialLoginButton(navController: NavController,){
+    Spacer(modifier = Modifier.height(30.dp))
+    ConnectLine()
+    Spacer(modifier = Modifier.height(20.dp))
+    Card(
+        modifier = Modifier
+            .background(
+                color = Color.White,
+                shape = RoundedCornerShape(25.dp)
+            )
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            Color.White
+        )
+    ) {
+        ConnectIcon(navController)
+
+    }
+    Spacer(modifier = Modifier.height(30.dp))
+    TextButton(
+        onClick = {
+        },
+    ) {
+        Text(
+            "SKIP", style = TextStyle(
+                color = Color.DarkGray,
+                fontWeight = FontWeight.Bold
+            )
+        )
     }
 }

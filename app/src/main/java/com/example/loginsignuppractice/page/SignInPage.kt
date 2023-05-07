@@ -5,20 +5,26 @@ import EmailTextField
 import PasswordTextField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
+import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.widget.CustomButton
 
 class SignInPage {
     @Composable
     fun SignInUi(navController: NavController) {
         BasicUi(
+            true,
             navController,
             "Sign In",
             "Sign in to discover amazing near around you.",
@@ -43,10 +49,16 @@ fun SignInContent(navController: NavController) {
     CustomButton(text = "Sign In"){
 
     }
-    TextButton(
-        onClick = {}
-    ) {
-        Text("Forgot Password?")
-    }
+    ClickableText(
+        text = AnnotatedString(
+            "Forgot Password?",
+            spanStyle = SpanStyle(
+                fontSize = 10.sp,
+                color = mainColor
+            )
+        ),
+        onClick = {
+
+        })
 }
 

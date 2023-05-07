@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.backgroundColor
 
 @Composable
@@ -32,7 +34,6 @@ fun ConnectLine() {
             )
         )
         Spacer(modifier = Modifier.width(10.dp))
-
         Divider(
             modifier = Modifier.fillMaxWidth(),
             color = Color.DarkGray, thickness = 1.dp
@@ -43,7 +44,7 @@ fun ConnectLine() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConnectIcon() {
+fun ConnectIcon(navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -113,11 +114,17 @@ fun ConnectIcon() {
             contentAlignment = Alignment.Center,
 
             ) {
-            Icon(
-                imageVector = Icons.Default.Phone,
-                contentDescription = "phone",
-                tint = Color.White
-            )
+            IconButton(
+                onClick = {
+                    navController.navigate(Route.NumberLogin.routes)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = "phone",
+                    tint = Color.White
+                )
+            }
         }
     }
 }

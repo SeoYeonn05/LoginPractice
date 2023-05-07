@@ -101,7 +101,7 @@ fun StartUI(navController: NavController) {
                         Spacer(modifier = Modifier.height(30.dp))
                         ConnectLine()
                         Spacer(modifier = Modifier.height(20.dp))
-                        ConnectIcon()
+                        ConnectIcon(navController)
 
                     }
                 }

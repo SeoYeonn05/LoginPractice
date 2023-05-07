@@ -106,3 +106,64 @@ fun checkPassword(text: String): Boolean {
     return Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", text)
 }
 
+@Composable
+fun DuckieTextField() {
+    var text by remember { mutableStateOf("") }
+
+    BasicTextField(
+        value = text,
+        onValueChange = {text = it},
+        decorationBox = {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                text.forEachIndexed { index, char ->
+                    DuckieTextFieldCharContainer(
+                        text = char,
+                        isFocused = index == text.lastIndex,
+                    )
+                }
+                repeat(6 - text.length) {
+                    DuckieTextFieldCharContainer(
+                        text = ' ',
+                        isFocused = false,
+                    )
+                }
+            }
+        },
+    )
+}
+
+
+@Composable
+private fun DuckieTextFieldCharContainer(
+    modifier: Modifier = Modifier,
+    text: Char,
+    isFocused: Boolean,
+) {
+    val shape = remember { RoundedCornerShape(4.dp) }
+
+    Box(
+        modifier = modifier
+            .size(
+                width = 40.dp,
+                height = 46.dp,
+            )
+            .background(
+                color = backgroundColor,
+                shape = shape,
+            )
+            .run {
+                if (isFocused) {
+                    border(
+                        width = 3.dp,
+                        color = Color(0xFFFF8300),
+                        shape = shape,
+                    )
+                } else {
+                    this
+                }
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(text = text.toString())
+    }
+}
