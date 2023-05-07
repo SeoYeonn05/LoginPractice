@@ -38,10 +38,11 @@ class RecoverPwPage {
         PhoneNumField(
             mask = "000 0000 0000",
             maskNumber = '0',)
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         EmailTextField(textFieldValue = email)
+        Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Recover Password") {
-            navController.navigate(Route.OTP.routes)
+            navController.navigate(Route.EnterOTP.routes)
         }
     }
 }

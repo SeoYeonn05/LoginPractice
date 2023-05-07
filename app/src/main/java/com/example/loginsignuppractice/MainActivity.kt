@@ -1,5 +1,6 @@
 package com.example.loginsignuppractice
 
+import EnterOTP
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -65,8 +66,11 @@ fun Screen() {
         composable(Route.RecoverPassword.routes) {
             RecoverPwPage().RecoverPwUi(navController =  navController)
         }
-        composable(Route.OTP.routes) {
-            RecoverPwPage().RecoverPwUi(navController =  navController)
+        composable(Route.EnterOTP.routes) {
+            EnterOTP(navController =  navController)
+        }
+        composable(Route.NewPassword.routes) {
+            EnterOTP(navController =  navController)
         }
 
     }
