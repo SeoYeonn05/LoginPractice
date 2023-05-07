@@ -1,27 +1,24 @@
 import android.util.Patterns
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.example.loginsignuppractice.ui.theme.backgroundColor
 import java.util.regex.Pattern
@@ -132,7 +129,85 @@ fun DuckieTextField() {
     )
 }
 
+@Composable
+fun PhoneNumField(
+    mask: String = "000 0000 0000",
+    maskNumber: Char = '0',
+) {
+    var phoneNum by remember { mutableStateOf("") }
+    val infoIconView = @Composable {
+        Icon(
+            imageVector = Icons.Default.Info,
+            contentDescription = "",
+            tint = Color.LightGray,
+        )
+    }
+    TextField(
+        value = phoneNum,
+        onValueChange = { it ->
+            phoneNum = it
+            it.take(mask.count { it == maskNumber })
+        },
+        label = {
+            Text(text = "Enter mobile number")
+        },
+        leadingIcon = { Icon(imageVector = Icons.Default.Phone, contentDescription = "") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+        visualTransformation = PhoneVisualTransformation(mask, maskNumber),
+        modifier = Modifier.fillMaxWidth(),
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = backgroundColor,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        ),
+    )
+}
 
+/*fun checkPhoneNum(num: TextFieldValue): Boolean {
+
+}*/
+class PhoneVisualTransformation(val mask: String, val maskNumber: Char) : VisualTransformation {
+
+    private val maxLength = mask.count { it == maskNumber }
+
+    override fun filter(text: AnnotatedString): TransformedText {
+        val trimmed = if (text.length > maxLength) text.take(maxLength) else text
+
+        val annotatedString = buildAnnotatedString {
+            if (trimmed.isEmpty()) return@buildAnnotatedString
+
+            var maskIndex = 0
+            var textIndex = 0
+            while (textIndex < trimmed.length && maskIndex < mask.length) {
+                if (mask[maskIndex] != maskNumber) {
+                    val nextDigitIndex = mask.indexOf(maskNumber, maskIndex)
+                    append(mask.substring(maskIndex, nextDigitIndex))
+                    maskIndex = nextDigitIndex
+                }
+                append(trimmed[textIndex++])
+                maskIndex++
+            }
+        }
+
+        return TransformedText(annotatedString, PhoneOffsetMapper(mask, maskNumber))
+    }
+}
+
+private class PhoneOffsetMapper(val mask: String, val numberChar: Char) : OffsetMapping {
+
+    override fun originalToTransformed(offset: Int): Int {
+        var noneDigitCount = 0
+        var i = 0
+        while (i < offset + noneDigitCount) {
+            if (mask[i++] != numberChar) noneDigitCount++
+        }
+        return offset + noneDigitCount
+    }
+
+    override fun transformedToOriginal(offset: Int): Int =
+        offset - mask.take(offset).count { it != numberChar }
+}
 @Composable
 private fun DuckieTextFieldCharContainer(
     modifier: Modifier = Modifier,

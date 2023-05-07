@@ -62,6 +62,12 @@ fun Screen() {
         composable(Route.Main.routes) {
             Main(navController =  navController)
         }
+        composable(Route.RecoverPassword.routes) {
+            RecoverPwPage().RecoverPwUi(navController =  navController)
+        }
+        composable(Route.OTP.routes) {
+            RecoverPwPage().RecoverPwUi(navController =  navController)
+        }
 
     }
 }
