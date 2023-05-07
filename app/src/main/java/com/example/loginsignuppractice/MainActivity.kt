@@ -1,6 +1,8 @@
 package com.example.loginsignuppractice
 
 import Background
+import ConnectIcon
+import ConnectLine
 import android.annotation.SuppressLint
 import android.graphics.drawable.Icon
 import android.os.Bundle
@@ -9,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.GenericShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -24,6 +27,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,7 +61,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun StartPage() {
     Box() {
-        Background(height = 300)
+        Background(height = 400)
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -68,9 +72,10 @@ fun StartPage() {
                 modifier = Modifier.size(128.dp)
             )
             Text(
-                "APP ICON",
+                "A P P  I C O N",
                 style = TextStyle(
-                    color = Color.White
+                    color = Color.White,
+                    fontWeight = FontWeight.ExtraBold
                 )
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -81,75 +86,64 @@ fun StartPage() {
                 ),
                 modifier = Modifier
                     .height(380.dp)
-                    .width(300.dp),
+                    .width(340.dp),
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        "Welcome to App Name.",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp),
+                    contentAlignment = Alignment.Center
+                ){
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.width(280.dp)
+                    ) {
+                        Text(
+                            "Welcome to App Name.",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
-                    )
-                    Text(
-                        "Discover Amazing Thing Near Around You.",
-                        style = TextStyle(
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight.Light
+                        Text(
+                            "Discover Amazing Thing Near Around You.",
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Light
+                            )
                         )
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    CustomButton("Sign In")
-                    OutlinedButton(
-                        onClick = {}) {
-                        Text("Sign Up")
-                    }
+                        Spacer(modifier = Modifier.height(30.dp))
+                        CustomButton("Sign In")
+                        OutlinedButton(
+                            onClick = {},
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text("Sign Up")
+                        }
+                        Spacer(modifier = Modifier.height(30.dp))
+                        ConnectLine()
+                        Spacer(modifier = Modifier.height(30.dp))
+                        ConnectIcon()
 
+                    }
                 }
             }
+            Spacer(modifier = Modifier.height(50.dp))
             Text(
                 "SKIP",
-                color = Color.DarkGray
+                color = Color.DarkGray,
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold
+                )
             )
         }
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BasicBackground() {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(text = "aa")
-                },
-                navigationIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Unspecified.copy(alpha = 0f)),
-            )
-        }
-    ) {
-
-    }
-}
-
-
-@Composable
-fun MyDialog(modifier: Modifier) {
-    Column() {
-
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
