@@ -41,7 +41,11 @@ fun IconTextField(imageVector: ImageVector, contentType: String, textFieldValue:
 }
 
 @Composable
-fun EmailTextField(textFieldValue: TextFieldValue){
+fun EmailTextField(
+    onTextChanged:(String) -> Unit
+    ){
+    var textValue by remember { mutableStateOf(TextFieldValue()) }
+
     val infoIconView = @Composable {
         Icon(
             imageVector = Icons.Default.Info,
@@ -49,20 +53,20 @@ fun EmailTextField(textFieldValue: TextFieldValue){
             tint = Color.LightGray,
         )
     }
-    var email by remember { mutableStateOf(textFieldValue) }
-
     TextField(
-        value = email,
+        value = textValue,
         leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "") },
         placeholder = { Text(text = "Email") },
-        onValueChange = { email = it },
+        onValueChange = {
+            textValue = it
+            onTextChanged(textValue.text) },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = backgroundColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         ),
-        trailingIcon = if (!checkEmail(email.text) && email.text.isNotBlank()) infoIconView else null
+        trailingIcon = if (!checkEmail(textValue.text) && textValue.text.isNotBlank()) infoIconView else null
     )
 }
 
@@ -71,8 +75,9 @@ fun checkEmail(text: String): Boolean {
 }
 
 @Composable
-fun PasswordTextField(textFieldValue: TextFieldValue, text: String){
-    var password by remember { mutableStateOf(textFieldValue) }
+fun PasswordTextField(
+    onTextChanged:(String) -> Unit, text: String){
+    var textValue by remember { mutableStateOf(TextFieldValue()) }
 
     val infoIconView = @Composable {
         Icon(
@@ -83,10 +88,11 @@ fun PasswordTextField(textFieldValue: TextFieldValue, text: String){
     }
 
     TextField(
-        value = password,
+        value = textValue,
         leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
         placeholder = { Text(text = text) },
-        onValueChange = { password = it },
+        onValueChange = { textValue = it
+            onTextChanged(textValue.text)},
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = backgroundColor,
             focusedIndicatorColor = Color.Transparent,
@@ -94,7 +100,7 @@ fun PasswordTextField(textFieldValue: TextFieldValue, text: String){
             disabledIndicatorColor = Color.Transparent
         ),
         visualTransformation = PasswordVisualTransformation(),
-        trailingIcon = if (!checkPassword(password.text) && password.text.isNotBlank()) infoIconView else null
+        trailingIcon = if (!checkPassword(textValue.text) && textValue.text.isNotBlank()) infoIconView else null
     )
 }
 

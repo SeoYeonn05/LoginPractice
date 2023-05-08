@@ -6,6 +6,7 @@ import PhoneNumField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,7 @@ class RecoverPwPage {
 
     @Composable
     fun RecoverPwContent(navController: NavController) {
-        var email by remember { mutableStateOf(TextFieldValue("")) }
+        var email by rememberSaveable { mutableStateOf("") }
         var phoneNum by remember { mutableStateOf(TextFieldValue("")) }
 
         PhoneNumField(
@@ -39,7 +40,9 @@ class RecoverPwPage {
             mask = "000 0000 0000",
             maskNumber = '0',)
         Spacer(modifier = Modifier.height(10.dp))
-        EmailTextField(textFieldValue = email)
+        EmailTextField(
+            onTextChanged = {email = it}
+        )
         Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Recover Password") {
             //왜 안되는건지 모르겠음

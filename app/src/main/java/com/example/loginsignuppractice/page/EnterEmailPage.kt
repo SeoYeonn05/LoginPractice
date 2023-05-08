@@ -5,6 +5,7 @@ import EmailTextField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -29,9 +30,11 @@ fun EnterEmail(navController: NavController) {
 
 @Composable
 fun EnterEmailContent(navController: NavController) {
-    var email by remember { mutableStateOf(TextFieldValue("")) }
+    var email by rememberSaveable { mutableStateOf("") }
 
-    EmailTextField(email)
+    EmailTextField(
+        onTextChanged = {email = it}
+    )
     Spacer(modifier = Modifier.height(20.dp))
     CustomButton(text = "Search") {
         navController.navigate(Route.RecoverPassword.routes)

@@ -5,6 +5,7 @@ import PasswordTextField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -29,13 +30,13 @@ class NewPassword {
 
     @Composable
     fun NewPasswordContent(navController: NavController) {
-        var pw by remember { mutableStateOf(TextFieldValue("")) }
-        var newPw by remember { mutableStateOf(TextFieldValue("")) }
+        var pw by rememberSaveable { mutableStateOf("") }
+        var newPw by rememberSaveable { mutableStateOf("") }
 
 
-        PasswordTextField(pw, "New Password")
+        PasswordTextField(onTextChanged = { pw = it }, "New Password")
         Spacer(modifier = Modifier.height(20.dp))
-        PasswordTextField(pw, "Confirm New Password")
+        PasswordTextField(onTextChanged = { newPw = it }, "Confirm New Password")
         Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Update Password") {
             navController.navigate(Route.ChangedPassword.routes)

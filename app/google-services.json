@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98274175535",
+    "project_id": "loginsignuppractice-c6bee",
+    "storage_bucket": "loginsignuppractice-c6bee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98274175535:android:83bfec6235c94931ecb4da",
+        "android_client_info": {
+          "package_name": "com.example.loginsignuppractice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98274175535-7e60hvnrae5efl5bnr9h81fmd3ikcjrt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8U_ww1_zQwQeukCRhDjq1TVo68oc9Tjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98274175535-7e60hvnrae5efl5bnr9h81fmd3ikcjrt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

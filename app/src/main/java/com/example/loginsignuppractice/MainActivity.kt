@@ -23,12 +23,20 @@ import androidx.navigation.compose.rememberNavController
 import com.example.loginsignuppractice.page.*
 import com.example.loginsignuppractice.ui.theme.LoginSignUpPracticeTheme
 import com.example.loginsignuppractice.ui.theme.backgroundColor
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : ComponentActivity() {
+    private var auth: FirebaseAuth? = null
+
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+
         setContent {
             LoginSignUpPracticeTheme {
                 Surface(
@@ -36,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = backgroundColor
                 ) {
-                    Screen()
+                    Screen(auth!!)
                 }
             }
         }
@@ -44,18 +52,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Screen() {
+fun Screen(auth: FirebaseAuth) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Route.Start.routes) {
         composable(Route.Start.routes) {
-            StartUI(navController = navController)
+            StartPage().StartUI(navController = navController)
         }
         composable(Route.SignIn.routes) {
-            SignInPage().SignInUi(navController = navController)
+            SignInPage().SignInUi(navController = navController, auth)
         }
         composable(Route.SignUp.routes) {
-            SignUpPage().SignUpUi(navController = navController)
+            SignUpUi(navController = navController, auth)
         }
         composable(Route.NumberLogin.routes) {
             NumberLoginUi(navController = navController)
