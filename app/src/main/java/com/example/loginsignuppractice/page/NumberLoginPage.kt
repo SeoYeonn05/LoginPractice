@@ -18,6 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
@@ -54,6 +55,8 @@ fun NumberLoginContent(navController: NavController) {
         DuckieTextField()
         Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Next") {
+            // val bundle = bundleOf("phoneNum" to phoneNum)
+            // 넘어갈 때 데이터 전송 만들기
             navController.navigate(Route.EnterEmail.routes)
         }
         Spacer(modifier = Modifier.height(30.dp))

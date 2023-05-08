@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import checkEmail
 import com.example.loginsignuppractice.Route
@@ -18,7 +19,7 @@ class RecoverPwPage {
     @Composable
     fun RecoverPwUi(navController: NavController) {
         BasicUi(
-            true,
+            false,
             navController,
             "Recover your password",
             "Select credentials which should we use to recover your password.",
@@ -41,7 +42,10 @@ class RecoverPwPage {
         EmailTextField(textFieldValue = email)
         Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Recover Password") {
-            navController.navigate(Route.EnterOTP.routes)
+            //왜 안되는건지 모르겠음
+            val bundle = bundleOf("phoneNum" to phoneNum.text)
+
+            navController.navigate("${Route.EnterOTP.routes}/$bundle")
         }
     }
 }

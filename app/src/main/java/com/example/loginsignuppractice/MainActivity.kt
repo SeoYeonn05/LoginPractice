@@ -1,5 +1,6 @@
 package com.example.loginsignuppractice
 
+import ChangedPasswordUi
 import EnterOTP
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,8 +15,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.loginsignuppractice.page.*
 import com.example.loginsignuppractice.ui.theme.LoginSignUpPracticeTheme
@@ -55,27 +58,34 @@ fun Screen() {
             SignUpPage().SignUpUi(navController = navController)
         }
         composable(Route.NumberLogin.routes) {
-            NumberLoginUi(navController =  navController)
+            NumberLoginUi(navController = navController)
         }
         composable(Route.EnterEmail.routes) {
-            EnterEmail(navController =  navController)
+            EnterEmail(navController = navController)
         }
         composable(Route.Main.routes) {
-            Main(navController =  navController)
+            Main(navController = navController)
         }
         composable(Route.RecoverPassword.routes) {
-            RecoverPwPage().RecoverPwUi(navController =  navController)
+            RecoverPwPage().RecoverPwUi(navController = navController)
         }
-        composable(Route.EnterOTP.routes) {
-            EnterOTP(navController =  navController)
+        composable("${Route.EnterOTP.routes}/{phoneNum}" , arguments = listOf(
+            navArgument("phoneNum"){
+                type = NavType.StringType
+            }
+        )) {
+            val phoneNum = it.arguments?.getString("phoneNum")
+
+            if (phoneNum != null) {
+                EnterOTP(navController = navController, phoneNum)
+            }
         }
         composable(Route.NewPassword.routes) {
-            EnterOTP(navController =  navController)
+            NewPassword().NewPasswordUi(navController = navController)
         }
         composable(Route.ChangedPassword.routes) {
-            EnterOTP(navController =  navController)
+            ChangedPasswordUi(navController = navController)
         }
-
     }
 }
 
@@ -95,10 +105,6 @@ fun Main(navController: NavController) {
         )
     }
 }
-
-
-
-
 
 
 @Preview(showBackground = true)

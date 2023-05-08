@@ -16,10 +16,10 @@ class NewPassword {
     @Composable
     fun NewPasswordUi(navController: NavController) {
         BasicUi(
-            true,
+            false,
             navController,
-            "Find your account",
-            "Please enter your email address of phone number to search for your account.",
+            "Create new password",
+            "Create a new password and please never share it with anyone for safe use.",
             ui = { NewPasswordContent(navController) },
             backAction = {
                 navController.popBackStack()
@@ -36,14 +36,10 @@ class NewPassword {
         PasswordTextField(pw, "New Password")
         Spacer(modifier = Modifier.height(20.dp))
         PasswordTextField(pw, "Confirm New Password")
+        Spacer(modifier = Modifier.height(30.dp))
         CustomButton(text = "Update Password") {
-            navController.navigate(Route.NewPassword.routes)
+            navController.navigate(Route.ChangedPassword.routes)
         }
 
-    }
-
-    private fun checkPassword(pw: String, newPw: String): Boolean {
-        if (pw == newPw) return true
-        return false
     }
 }

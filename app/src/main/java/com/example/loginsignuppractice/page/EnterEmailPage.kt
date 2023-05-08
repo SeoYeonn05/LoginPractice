@@ -16,7 +16,7 @@ import com.example.loginsignuppractice.widget.CustomButton
 @Composable
 fun EnterEmail(navController: NavController) {
     BasicUi(
-        true,
+        false,
         navController,
         "Find your account",
         "Please enter your email address of phone number to search for your account.",

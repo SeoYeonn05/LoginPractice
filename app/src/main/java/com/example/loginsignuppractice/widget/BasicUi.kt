@@ -31,24 +31,6 @@ fun BasicUi(
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-/*        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Icon(imageVector = Icons.Default.Face, contentDescription = "Logo") },
-                navigationIcon = {
-                    IconButton(
-                        onClick = backAction
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent
-                )
-            )
-        }*/
     ) {
         Box(
             modifier = Modifier
@@ -71,7 +53,8 @@ fun BasicUi(
                     ),
                     modifier = Modifier
                         .height(350.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
                 ) {
                     Box(
                         modifier = Modifier
@@ -100,6 +83,9 @@ fun BasicUi(
                 }
                 if(loginPage){
                     SocialLoginButton(navController)
+                } else{
+                    Spacer(modifier = Modifier.height(175.dp))
+
                 }
             }
         }

@@ -16,12 +16,12 @@ import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.widget.CustomButton
 
 @Composable
-fun EnterOTP(navController: NavController) {
+fun EnterOTP(navController: NavController, phoneNum: String) {
     BasicUi(
-        true,
+        false,
         navController,
-        "Find your account",
-        "Please enter your email address of phone number to search for your account.",
+        "Enter OTP",
+        "Please enter 6 digit Code sent to your registered mobile number $phoneNum",
         ui = { EnterOTPContent(navController) },
         backAction = {
             navController.popBackStack()
