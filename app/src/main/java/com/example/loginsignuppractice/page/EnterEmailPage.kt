@@ -37,4 +37,3 @@ fun EnterEmailContent(navController: NavController) {
         navController.navigate(Route.RecoverPassword.routes)
     }
 }
-

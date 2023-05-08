@@ -18,7 +18,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.widget.CustomButton
 
@@ -52,11 +51,9 @@ class SignUpPage {
         Spacer(modifier = Modifier.height(10.dp))
         EmailTextField(email)
         Spacer(modifier = Modifier.height(10.dp))
-        PasswordTextField(pw)
+        PasswordTextField(pw, "Password")
         Spacer(modifier = Modifier.height(30.dp))
-        CustomButton(text = "Sign Up") {
-
-        }
+        CustomButton(text = "Sign Up") {}
         Spacer(modifier = Modifier.height(20.dp))
         Row() {
             Text(

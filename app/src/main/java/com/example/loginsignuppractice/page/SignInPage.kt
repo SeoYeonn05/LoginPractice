@@ -6,8 +6,6 @@ import PasswordTextField
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -16,7 +14,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.loginsignuppractice.Route
+import checkEmail
+import checkPassword
 import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.widget.CustomButton
 
@@ -31,7 +30,7 @@ class SignInPage {
             ui = { SignInContent(navController) },
             backAction = {
                 navController.popBackStack()
-        })
+            })
     }
 }
 
@@ -44,11 +43,9 @@ fun SignInContent(navController: NavController) {
     EmailTextField(email)
     Spacer(modifier = Modifier.height(10.dp))
 
-    PasswordTextField(pw)
+    PasswordTextField(pw, "Password")
     Spacer(modifier = Modifier.height(20.dp))
-    CustomButton(text = "Sign In"){
-
-    }
+    CustomButton(text = "Sign In"){}
     ClickableText(
         text = AnnotatedString(
             "Forgot Password?",

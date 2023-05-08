@@ -72,6 +72,9 @@ fun Screen() {
         composable(Route.NewPassword.routes) {
             EnterOTP(navController =  navController)
         }
+        composable(Route.ChangedPassword.routes) {
+            EnterOTP(navController =  navController)
+        }
 
     }
 }

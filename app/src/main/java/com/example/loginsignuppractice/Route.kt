@@ -10,7 +10,8 @@ sealed class Route(val routes: String){
     object RecoverPassword: Route("RecoverPassword")
     object EnterOTP: Route("EnterOTP")
     object NewPassword: Route("NewPassword")
-    object ChangePassword: Route("ChangePassword")
+    object ChangedPassword: Route("ChangedPassword")
+
 }
 
 

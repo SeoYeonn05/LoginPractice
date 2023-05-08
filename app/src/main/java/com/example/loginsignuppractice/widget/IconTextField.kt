@@ -71,7 +71,7 @@ fun checkEmail(text: String): Boolean {
 }
 
 @Composable
-fun PasswordTextField(textFieldValue: TextFieldValue){
+fun PasswordTextField(textFieldValue: TextFieldValue, text: String){
     var password by remember { mutableStateOf(textFieldValue) }
 
     val infoIconView = @Composable {
@@ -85,7 +85,7 @@ fun PasswordTextField(textFieldValue: TextFieldValue){
     TextField(
         value = password,
         leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
-        placeholder = { Text(text = "Password") },
+        placeholder = { Text(text = text) },
         onValueChange = { password = it },
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = backgroundColor,
@@ -131,10 +131,11 @@ fun DuckieTextField() {
 
 @Composable
 fun PhoneNumField(
+    textFieldValue: TextFieldValue,
     mask: String = "000 0000 0000",
     maskNumber: Char = '0',
 ) {
-    var phoneNum by remember { mutableStateOf("") }
+    var phoneNum by remember { mutableStateOf(textFieldValue.text) }
     val infoIconView = @Composable {
         Icon(
             imageVector = Icons.Default.Info,

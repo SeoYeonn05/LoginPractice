@@ -2,16 +2,12 @@ package com.example.loginsignuppractice.page
 
 import BasicUi
 import DuckieTextField
-import IconTextField
 import PhoneNumField
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -50,8 +46,10 @@ fun NumberLoginContent(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PhoneNumField(
+            textFieldValue = phoneNum,
             mask = "000 0000 0000",
-            maskNumber = '0',)
+            maskNumber = '0',
+        )
         Spacer(modifier = Modifier.height(20.dp))
         DuckieTextField()
         Spacer(modifier = Modifier.height(30.dp))
