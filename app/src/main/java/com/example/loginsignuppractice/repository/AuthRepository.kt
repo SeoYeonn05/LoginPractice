@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import com.example.loginsignuppractice.R
 import com.example.loginsignuppractice.Route
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -17,6 +19,10 @@ class AuthRepository {
         get() = _userLiveData
 
 
+    fun checkCurrentUser(): Boolean{
+        val currentUser = firebaseAuth.currentUser
+        return currentUser != null
+    }
     fun signUp(
         navController: NavController,
         email: String,
@@ -46,7 +52,12 @@ class AuthRepository {
             firebaseAuth?.signInWithEmailAndPassword(email, password)
                 ?.addOnCompleteListener {
                     if (it.isSuccessful) {
-                        navController.popBackStack()
+                        navController.navigate(
+                            Route.Main.routes,
+                            NavOptions.Builder()
+                                .setPopUpTo(Route.Main.routes, true)
+                                .build()
+                        )
                         navController.navigate(Route.Main.routes)
                     } else {
                     }
@@ -54,7 +65,21 @@ class AuthRepository {
         }
     }
 
-    fun getUser(idToken:String){
+    fun resetPw(navController: NavController, email: String): String{
+        var str = ""
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {
+            str = if(it.isSuccessful){
+                navController.navigate(Route.SignIn.routes)
+                "Please reset your password and log in again"
+            } else{
+                ""
+            }
+        }
+
+        return str
+    }
+
+    fun googleLogin(idToken:String){
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if(it.isSuccessful){

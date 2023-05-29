@@ -27,20 +27,21 @@ import com.example.loginsignuppractice.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun SignUpUi(navController: NavController, auth: FirebaseAuth) {
+fun SignUpUi(navController: NavController) {
+
     BasicUi(
         true,
         navController,
         "Sign Up",
         "Sign up to discover amazing near around you.",
-        ui = { SignUpContent(navController, auth) },
+        ui = { SignUpContent(navController) },
         backAction = {
             navController.popBackStack()
         })
 }
 
 @Composable
-fun SignUpContent(navController: NavController, auth: FirebaseAuth) {
+fun SignUpContent(navController: NavController) {
     val authRepository = AuthRepository()
     var username by remember { mutableStateOf(TextFieldValue("")) }
     var email by rememberSaveable { mutableStateOf("") }
@@ -62,7 +63,7 @@ fun SignUpContent(navController: NavController, auth: FirebaseAuth) {
     Spacer(modifier = Modifier.height(30.dp))
     CustomButton(text = "Sign Up") {
         Log.d(TAG, "Sign Up")
-        if (auth != null) {
+        if (authRepository != null) {
             Log.d(TAG, "click createUserWithEmail")
             authRepository.signUp(navController, email, pw)
         }

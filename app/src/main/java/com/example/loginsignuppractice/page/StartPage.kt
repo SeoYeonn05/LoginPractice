@@ -4,6 +4,7 @@ import Background
 import ConnectIcon
 import ConnectLine
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
@@ -23,15 +24,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.component.CustomButton
+import com.example.loginsignuppractice.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class StartPage: ComponentActivity(){
+class StartPage(navController: NavController): ComponentActivity(){
+    private val authRepository = AuthRepository()
+    private var pref: SharedPreferences? = null
+    private var navController = navController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        pref = getSharedPreferences("pref", MODE_PRIVATE)
+
+        val currentUser = authRepository.checkCurrentUser()
+        if(currentUser != null && pref?.getBoolean("AutoLoginChecked", false) == true){
+            navController.navigate(Route.Main.routes)
+
+        }
 
     }
 
@@ -39,7 +52,7 @@ class StartPage: ComponentActivity(){
     @SuppressLint("NotConstructor")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun StartUI(navController: NavController) {
+    fun StartUI() {
         Box() {
             Background(height = 400)
             Column(

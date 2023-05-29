@@ -29,12 +29,10 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : ComponentActivity() {
-    private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var currentUser = null
 
         setContent {
             LoginSignUpPracticeTheme {
@@ -43,7 +41,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = backgroundColor
                 ) {
-                    Screen(auth!!)
+                    Screen()
                 }
             }
         }
@@ -51,18 +49,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Screen(auth: FirebaseAuth) {
+fun Screen() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Route.Start.routes) {
         composable(Route.Start.routes) {
-            StartPage().StartUI(navController = navController)
+            StartPage(navController = navController).StartUI()
         }
         composable(Route.SignIn.routes) {
-            SignInPage().SignInUi(navController = navController, auth)
+            SignInPage().SignInUi(navController = navController)
         }
         composable(Route.SignUp.routes) {
-            SignUpUi(navController = navController, auth)
+            SignUpUi(navController = navController)
         }
         composable(Route.NumberLogin.routes) {
             NumberLoginUi(navController = navController)
@@ -92,6 +90,9 @@ fun Screen(auth: FirebaseAuth) {
         }
         composable(Route.ChangedPassword.routes) {
             ChangedPasswordUi(navController = navController)
+        }
+        composable(Route.ChangePassword.routes) {
+            ChangePasswordUi(navController = navController)
         }
     }
 }

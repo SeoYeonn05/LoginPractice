@@ -30,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignInPage : ComponentActivity() {
     var viewModel: SignInViewModel = SignInViewModel()
+    private val authRepository = AuthRepository()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +39,15 @@ class SignInPage : ComponentActivity() {
     }
 
 
-
     @Composable
-    fun SignInUi(navController: NavController, auth: FirebaseAuth) {
+    fun SignInUi(navController: NavController) {
         var autoLogin = viewModel.pref?.getBoolean("AutoLoginChecked", false) ?: false
 
         Log.d("SharedPreference", autoLogin.toString())
 
-        if (auth.currentUser != null && autoLogin) {
+        if (authRepository.checkCurrentUser() != null && autoLogin) {
             navController.navigate(Route.Main.routes)
-        } else{
+        } else {
             BasicUi(
                 true,
                 navController,
@@ -62,7 +63,6 @@ class SignInPage : ComponentActivity() {
 
     @Composable
     fun SignInContent(navController: NavController) {
-        val authRepository = AuthRepository()
         var email by rememberSaveable { mutableStateOf("") }
         var pw by rememberSaveable { mutableStateOf("") }
         //var isChecked by remember { mutableStateOf(false) }
@@ -88,16 +88,11 @@ class SignInPage : ComponentActivity() {
             )
             Spacer(modifier = Modifier.width(20.dp))
             Switch(
-                checked = viewModel.isChecked.value,
+                checked = viewModel.isChecked.value?:false,
                 onCheckedChange = {
-                    viewModel.isChecked.value = it
-                    viewModel.pref?.edit()?.apply {
-                        putBoolean("AutoLoginChecked", it)
-                        apply()
-                        Log.d("SharedPreference",
-                            viewModel.pref?.getBoolean("AutoLoginChecked", false).toString()
-                        )
-                    }
+                    // viewModel로 넣어야 될까? 아니면 여기서 하는게 맞나
+                    viewModel.setCheckedValue(it)
+                    viewModel.isAutoLogin()
 
                 },
                 colors = SwitchDefaults.colors(uncheckedThumbColor = mainColor),
@@ -121,7 +116,7 @@ class SignInPage : ComponentActivity() {
                 )
             ),
             onClick = {
-
+                navController.navigate(Route.ChangePassword.routes)
             })
     }
 }
