@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
 
 @Composable
 fun EnterOTP(navController: NavController, phoneNum: String) {

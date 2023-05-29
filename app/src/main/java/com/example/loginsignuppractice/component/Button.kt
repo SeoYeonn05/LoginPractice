@@ -1,4 +1,4 @@
-package com.example.loginsignuppractice.widget
+package com.example.loginsignuppractice.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

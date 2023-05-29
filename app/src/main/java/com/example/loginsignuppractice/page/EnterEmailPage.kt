@@ -7,11 +7,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
 
 
 @Composable

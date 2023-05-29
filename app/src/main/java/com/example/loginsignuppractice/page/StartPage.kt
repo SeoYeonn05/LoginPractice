@@ -22,19 +22,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.components.Component
 import com.google.firebase.ktx.Firebase
 
 
 class StartPage: ComponentActivity(){
-    private var auth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
 
     }
 
@@ -43,7 +40,6 @@ class StartPage: ComponentActivity(){
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun StartUI(navController: NavController) {
-
         Box() {
             Background(height = 400)
             Column(

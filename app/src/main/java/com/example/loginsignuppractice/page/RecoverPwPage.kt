@@ -12,9 +12,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import checkEmail
 import com.example.loginsignuppractice.Route
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
 
 class RecoverPwPage {
     @Composable

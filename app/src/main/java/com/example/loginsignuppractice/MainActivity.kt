@@ -29,13 +29,12 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : ComponentActivity() {
-    private var auth: FirebaseAuth? = null
+    private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
+        var currentUser = null
 
         setContent {
             LoginSignUpPracticeTheme {
@@ -77,8 +76,8 @@ fun Screen(auth: FirebaseAuth) {
         composable(Route.RecoverPassword.routes) {
             RecoverPwPage().RecoverPwUi(navController = navController)
         }
-        composable("${Route.EnterOTP.routes}/{phoneNum}" , arguments = listOf(
-            navArgument("phoneNum"){
+        composable("${Route.EnterOTP.routes}/{phoneNum}", arguments = listOf(
+            navArgument("phoneNum") {
                 type = NavType.StringType
             }
         )) {

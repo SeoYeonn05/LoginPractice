@@ -21,12 +21,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
+import com.example.loginsignuppractice.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 @Composable
 fun SignUpUi(navController: NavController, auth: FirebaseAuth) {
@@ -43,6 +41,7 @@ fun SignUpUi(navController: NavController, auth: FirebaseAuth) {
 
 @Composable
 fun SignUpContent(navController: NavController, auth: FirebaseAuth) {
+    val authRepository = AuthRepository()
     var username by remember { mutableStateOf(TextFieldValue("")) }
     var email by rememberSaveable { mutableStateOf("") }
     var pw by rememberSaveable { mutableStateOf("") }
@@ -65,7 +64,7 @@ fun SignUpContent(navController: NavController, auth: FirebaseAuth) {
         Log.d(TAG, "Sign Up")
         if (auth != null) {
             Log.d(TAG, "click createUserWithEmail")
-            createAccount(auth, navController, email, pw)
+            authRepository.signUp(navController, email, pw)
         }
     }
     Spacer(modifier = Modifier.height(20.dp))
@@ -104,28 +103,3 @@ fun SignUpContent(navController: NavController, auth: FirebaseAuth) {
         onClick = {})
 }
 
-
-fun createAccount(
-    auth: FirebaseAuth,
-    navController: NavController,
-    email: String,
-    pw: String
-) {
-    Log.d(TAG, "email: ${email}, pw: ${pw}")
-
-    if (email.isNotBlank() && pw.isNotBlank()) {
-        Log.d(TAG, "createUserWithEmail:start")
-
-        auth?.createUserWithEmailAndPassword(email, pw)?.addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d(TAG, "createUserWithEmail:success")
-
-                navController.navigate(Route.SignIn.routes)
-            } else {
-                Log.w(TAG, "createUserWithEmail:failure", it.exception)
-
-
-            }
-        }
-    }
-}

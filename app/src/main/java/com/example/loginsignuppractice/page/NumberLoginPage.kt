@@ -18,11 +18,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
-import com.example.loginsignuppractice.widget.CustomButton
+import com.example.loginsignuppractice.component.CustomButton
 
 @Composable
 fun NumberLoginUi(navController: NavController) {
