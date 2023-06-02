@@ -40,7 +40,7 @@ class StartPage(navController: NavController): ComponentActivity(){
         super.onCreate(savedInstanceState)
         pref = getSharedPreferences("pref", MODE_PRIVATE)
 
-        val currentUser = authRepository.checkCurrentUser()
+        val currentUser = authRepository.getCurrentUser()
         if(currentUser != null && pref?.getBoolean("AutoLoginChecked", false) == true){
             navController.navigate(Route.Main.routes)
 

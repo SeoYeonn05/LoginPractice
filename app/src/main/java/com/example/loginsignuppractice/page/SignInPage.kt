@@ -45,7 +45,7 @@ class SignInPage : ComponentActivity() {
 
         Log.d("SharedPreference", autoLogin.toString())
 
-        if (authRepository.checkCurrentUser() != null && autoLogin) {
+        if (authRepository.getCurrentUser() != null && autoLogin) {
             navController.navigate(Route.Main.routes)
         } else {
             BasicUi(

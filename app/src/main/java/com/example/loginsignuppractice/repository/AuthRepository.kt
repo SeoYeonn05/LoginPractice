@@ -19,9 +19,9 @@ class AuthRepository {
         get() = _userLiveData
 
 
-    fun checkCurrentUser(): Boolean{
+    fun getCurrentUser(): FirebaseUser? {
         val currentUser = firebaseAuth.currentUser
-        return currentUser != null
+        return currentUser
     }
     fun signUp(
         navController: NavController,
