@@ -1,27 +1,35 @@
 package com.example.loginsignuppractice.repository
 
 import android.content.ContentValues
+import android.content.Context
+import android.content.SharedPreferences
+import android.os.Bundle
 import android.util.Log
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import com.example.loginsignuppractice.R
 import com.example.loginsignuppractice.Route
+import com.example.loginsignuppractice.Screen
+import com.example.loginsignuppractice.ui.theme.LoginSignUpPracticeTheme
+import com.example.loginsignuppractice.ui.theme.backgroundColor
+import com.example.loginsignuppractice.util.SharedPreferenceUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
-class AuthRepository {
+class AuthRepository(var context: Context) {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val _userLiveData = MutableLiveData<FirebaseUser>()
     val userLiveData: LiveData<FirebaseUser>
         get() = _userLiveData
 
-
     fun getCurrentUser(): FirebaseUser? {
-        val currentUser = firebaseAuth.currentUser
-        return currentUser
+        return firebaseAuth.currentUser
     }
     fun signUp(
         navController: NavController,
@@ -45,6 +53,8 @@ class AuthRepository {
                 }
             }
         }
+
+        SharedPreferenceUtil().saveString(context = context, "uid", firebaseAuth.currentUser!!.uid)
     }
 
     fun signIn(navController: NavController, email: String, password: String) {
@@ -52,13 +62,7 @@ class AuthRepository {
             firebaseAuth?.signInWithEmailAndPassword(email, password)
                 ?.addOnCompleteListener {
                     if (it.isSuccessful) {
-                        navController.navigate(
-                            Route.Main.routes,
-                            NavOptions.Builder()
-                                .setPopUpTo(Route.Main.routes, true)
-                                .build()
-                        )
-                        navController.navigate(Route.Main.routes)
+                        navController.navigate(Route.RegisterUserInfo.routes)
                     } else {
                     }
                 }

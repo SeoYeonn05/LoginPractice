@@ -4,6 +4,7 @@ import Background
 import ConnectIcon
 import ConnectLine
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,26 +26,37 @@ import androidx.navigation.NavController
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.component.CustomButton
 import com.example.loginsignuppractice.repository.AuthRepository
+import com.example.loginsignuppractice.util.SharedPreferenceUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class StartPage(navController: NavController): ComponentActivity(){
-    private val authRepository = AuthRepository()
-    private var pref: SharedPreferences? = null
+class StartPage(authRepository: AuthRepository, navController: NavController) :
+    ComponentActivity() {
     private var navController = navController
+    private var authRepository = authRepository
+    var nickname: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pref = getSharedPreferences("pref", MODE_PRIVATE)
-
+        var context: Context = this
+        var pref: SharedPreferenceUtil? = SharedPreferenceUtil()
         val currentUser = authRepository.getCurrentUser()
-        if(currentUser != null && pref?.getBoolean("AutoLoginChecked", false) == true){
-            navController.navigate(Route.Main.routes)
 
+        if (pref != null) {
+            nickname = pref!!.getString(context, "nickname", "")
         }
+
+
+        //&&this?.getBoolean("AutoLoginChecked", false) == true
+        if (currentUser != null && nickname == "") {
+            navController.navigate(Route.RegisterUserInfo.routes)
+        } else if (currentUser != null && nickname != "") {
+            navController.navigate(Route.Main.routes)
+        }
+
 
     }
 
