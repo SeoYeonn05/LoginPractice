@@ -24,7 +24,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginsignuppractice.R
-import com.example.loginsignuppractice.chatList
 import com.example.loginsignuppractice.model.ChatMessage
 import com.example.loginsignuppractice.repository.ChatRepository
 import com.example.loginsignuppractice.viewModel.ChatViewModel

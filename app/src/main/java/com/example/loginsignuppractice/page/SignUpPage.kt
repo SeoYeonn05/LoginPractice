@@ -24,25 +24,26 @@ import androidx.navigation.NavController
 import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.component.CustomButton
 import com.example.loginsignuppractice.repository.AuthRepository
+import com.example.loginsignuppractice.repository.UserRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.oAuthCredential
 
 @Composable
-fun SignUpUi(navController: NavController) {
+fun SignUpUi(userRepository: UserRepository, authRepository: AuthRepository, navController: NavController) {
 
     BasicUi(
         true,
         navController,
         "Sign Up",
         "Sign up to discover amazing near around you.",
-        ui = { SignUpContent(navController) },
+        ui = { SignUpContent(userRepository, authRepository, navController) },
         backAction = {
             navController.popBackStack()
         })
 }
 
 @Composable
-fun SignUpContent(navController: NavController) {
-    val authRepository = AuthRepository()
+fun SignUpContent(userRepository: UserRepository, authRepository: AuthRepository, navController: NavController) {
     var username by remember { mutableStateOf(TextFieldValue("")) }
     var email by rememberSaveable { mutableStateOf("") }
     var pw by rememberSaveable { mutableStateOf("") }
@@ -65,7 +66,8 @@ fun SignUpContent(navController: NavController) {
         Log.d(TAG, "Sign Up")
         if (authRepository != null) {
             Log.d(TAG, "click createUserWithEmail")
-            authRepository.signUp(navController, email, pw)
+            var uid = authRepository.signUp(navController, email, pw)
+            userRepository.createUser()
         }
     }
     Spacer(modifier = Modifier.height(20.dp))

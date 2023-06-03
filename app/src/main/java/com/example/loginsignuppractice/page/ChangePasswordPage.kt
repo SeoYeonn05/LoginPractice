@@ -4,6 +4,7 @@ import com.example.loginsignuppractice.repository.AuthRepository
 
 import BasicUi
 import EmailTextField
+import android.content.Context
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.ClickableText
@@ -21,13 +22,13 @@ import com.example.loginsignuppractice.ui.theme.mainColor
 
 
 @Composable
-fun ChangePasswordUi(navController: NavController) {
+fun ChangePasswordUi(context: Context, navController: NavController) {
     BasicUi(
         false,
         navController,
         "Change new password",
         "Create a new password and please never share it with anyone for safe use.",
-        ui = { changePasswordContent(navController) },
+        ui = { changePasswordContent(context, navController) },
         backAction = {
             navController.popBackStack()
         })
@@ -35,8 +36,8 @@ fun ChangePasswordUi(navController: NavController) {
 
 
 @Composable
-fun changePasswordContent(navController: NavController) {
-    val authRepository = AuthRepository()
+fun changePasswordContent(context: Context, navController: NavController) {
+    val authRepository = AuthRepository(context)
     var email by rememberSaveable { mutableStateOf("") }
 
     EmailTextField(

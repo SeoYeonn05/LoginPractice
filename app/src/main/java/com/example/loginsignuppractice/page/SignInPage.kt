@@ -3,6 +3,7 @@ package com.example.loginsignuppractice.page
 import BasicUi
 import EmailTextField
 import PasswordTextField
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -25,12 +26,14 @@ import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.ui.theme.mainColor
 import com.example.loginsignuppractice.component.CustomButton
 import com.example.loginsignuppractice.repository.AuthRepository
+import com.example.loginsignuppractice.repository.UserRepository
 import com.example.loginsignuppractice.viewModel.SignInViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class SignInPage : ComponentActivity() {
-    var viewModel: SignInViewModel = SignInViewModel()
-    private val authRepository = AuthRepository()
+class SignInPage(authRepository: AuthRepository, userRepository: UserRepository,) : ComponentActivity() {
+    var viewModel: SignInViewModel = SignInViewModel(authRepository)
+    private val authRepository = authRepository
+    private val userRepository = userRepository
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,8 +95,6 @@ class SignInPage : ComponentActivity() {
                 onCheckedChange = {
                     // viewModel로 넣어야 될까? 아니면 여기서 하는게 맞나
                     viewModel.setCheckedValue(it)
-                    viewModel.isAutoLogin()
-
                 },
                 colors = SwitchDefaults.colors(uncheckedThumbColor = mainColor),
 

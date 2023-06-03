@@ -2,17 +2,16 @@ package com.example.loginsignuppractice
 
 import ChangedPasswordUi
 import EnterOTP
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -21,11 +20,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.example.loginsignuppractice.page.*
+import com.example.loginsignuppractice.repository.AuthRepository
+import com.example.loginsignuppractice.repository.UserRepository
 import com.example.loginsignuppractice.ui.theme.LoginSignUpPracticeTheme
 import com.example.loginsignuppractice.ui.theme.backgroundColor
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +39,7 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = backgroundColor
                 ) {
-                    Screen()
+                    Screen(context = applicationContext)
                 }
             }
         }
@@ -49,18 +47,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Screen() {
+fun Screen(context: Context) {
     val navController = rememberNavController()
+    var authRepository = AuthRepository(context = context)
+    var userRepository = UserRepository(context = context)
 
     NavHost(navController = navController, startDestination = Route.Start.routes) {
         composable(Route.Start.routes) {
-            StartPage(navController = navController).StartUI()
+            StartPage(authRepository, navController = navController).StartUI()
         }
         composable(Route.SignIn.routes) {
-            SignInPage().SignInUi(navController = navController)
+            SignInPage(authRepository, userRepository).SignInUi(navController = navController)
         }
         composable(Route.SignUp.routes) {
-            SignUpUi(navController = navController)
+            SignUpUi(userRepository, authRepository, navController = navController)
         }
         composable(Route.NumberLogin.routes) {
             NumberLoginUi(navController = navController)
@@ -69,7 +69,7 @@ fun Screen() {
             EnterEmail(navController = navController)
         }
         composable(Route.Main.routes) {
-            Main(navController = navController)
+            MainPage().Main(navController = navController)
         }
         composable(Route.RecoverPassword.routes) {
             RecoverPwPage().RecoverPwUi(navController = navController)
@@ -92,27 +92,15 @@ fun Screen() {
             ChangedPasswordUi(navController = navController)
         }
         composable(Route.ChangePassword.routes) {
-            ChangePasswordUi(navController = navController)
+            ChangePasswordUi(context, navController = navController)
+        }
+        composable(Route.RegisterUserInfo.routes) {
+            registerUserInfoUi(userRepository, navController = navController)
         }
     }
 }
 
-@Composable
-fun Main(navController: NavController) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundColor)
-    ) {
-        androidx.compose.material.Text(
-            "메인 페이지",
-            style = TextStyle(
-                color = Color.White
-            ),
-            textAlign = TextAlign.Center
-        )
-    }
-}
+
 
 
 @Preview(showBackground = true)
