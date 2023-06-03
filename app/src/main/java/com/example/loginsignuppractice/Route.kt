@@ -12,6 +12,8 @@ sealed class Route(val routes: String){
     object NewPassword: Route("NewPassword")
     object ChangedPassword: Route("ChangedPassword")
     object ChangePassword: Route("ChangePassword")
+    object RegisterUserInfo: Route("RegisterUserInfo")
+
 }
 
 
