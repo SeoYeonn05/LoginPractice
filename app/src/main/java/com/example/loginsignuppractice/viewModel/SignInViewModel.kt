@@ -34,7 +34,7 @@ class SignInViewModel(authRepository: AuthRepository): ViewModel() {
         get() = _userLiveData
 
     // set 함수는 이렇게 만드는 게 맞나? 아니면 더 간단한 방법이 있을까?
-    fun setCheckedValue(value: Boolean) {
+    fun dzsetCheckedValue(value: Boolean) {
         _isChecked.value = value
         isAutoLogin()
     }

@@ -22,13 +22,13 @@ import com.example.loginsignuppractice.ui.theme.mainColor
 
 
 @Composable
-fun ChangePasswordUi(context: Context, navController: NavController) {
+fun ChangePasswordUi(authRepository: AuthRepository, navController: NavController) {
     BasicUi(
         false,
         navController,
         "Change new password",
         "Create a new password and please never share it with anyone for safe use.",
-        ui = { changePasswordContent(context, navController) },
+        ui = { changePasswordContent(authRepository = authRepository, navController) },
         backAction = {
             navController.popBackStack()
         })
@@ -36,8 +36,7 @@ fun ChangePasswordUi(context: Context, navController: NavController) {
 
 
 @Composable
-fun changePasswordContent(context: Context, navController: NavController) {
-    val authRepository = AuthRepository(context)
+fun changePasswordContent(authRepository: AuthRepository, navController: NavController) {
     var email by rememberSaveable { mutableStateOf("") }
 
     EmailTextField(

@@ -1,24 +1,27 @@
 package com.example.loginsignuppractice.repository
 
-import android.content.Context
 import android.util.Log
+import com.example.loginsignuppractice.model.Chat
+import com.example.loginsignuppractice.model.ChatMessage
 import com.example.loginsignuppractice.model.Friend
 import com.example.loginsignuppractice.model.UserInfo
-import com.example.loginsignuppractice.util.SharedPreferenceUtil
 import com.google.firebase.firestore.FirebaseFirestore
+import java.sql.Timestamp
 
 
-class UserRepository(context: Context) {
+class FireStoreRepository(authRepository: AuthRepository) {
     private val db = FirebaseFirestore.getInstance()
     private var userAutoId = ""
 
     //var userAutoId = "users"
 
     init {
-        //userAutoId = db.collection("user").document().id
-        userAutoId = SharedPreferenceUtil().getString(context, "uid", "")
+        userAutoId = authRepository.getCurrentUser()!!.uid
         Log.d("sharedPreference userAutoId:", userAutoId)
 
+    }
+    fun getUserAutoId():String{
+        return userAutoId
     }
 
     fun createUser() {
@@ -60,8 +63,7 @@ class UserRepository(context: Context) {
         return userInfo
     }
 
-    fun getFriendsList(userAutoId: String):List<Friend>{
-        var userRef = db.collection("user").document(userAutoId)
+    fun getFriendsList():List<Friend>{
         var userInfo = getUserInfo(userAutoId)
         var friendsList = mutableListOf<Friend>()
 
@@ -77,6 +79,7 @@ class UserRepository(context: Context) {
 
         return friendsList
     }
+
 
     fun updateUserInfo(key: String, data: Any) {
         Log.d("updateUserInfo autoId:", userAutoId)
@@ -160,42 +163,67 @@ class UserRepository(context: Context) {
             }
     }
 
-    fun updateChatRoomList(nickname: String, chatRoomId: String) {
-        Log.d("autoId:", userAutoId)
-        var userRef = db.collection("user").document(userAutoId)
+    fun createChatRoom(receiverUid: String) {
+        var chatRoomId = db.collection("message").document().id
 
-        var userInfo = getUserInfo(nickname)
-        val chatRoomList = userInfo.chatRoomList ?: mutableListOf()
 
-        Log.d("userInfo:", chatRoomList.toString())
+        val chat: Chat? = Chat(
+            messageList = mutableListOf<ChatMessage>(),
+            receiver = getUserInfo(receiverUid).nickname,
+            sender = ""
+        )
+        val message = mapOf(chatRoomId!! to chat!!)
 
-        if (chatRoomList.contains(chatRoomId)) {
-            Log.d("Friend already exists in the friendList:", chatRoomId)
-            return
+        db.collection("message").document(chatRoomId).set(message)
+        Log.d("createUser ChatRoom:", message.toString())
+    }
+
+    fun getChatRoomList(): List<Chat> {
+        var chatRoomIdList = getUserInfo(userAutoId).chatRoomList
+        var chatList = mutableListOf<Chat>()
+
+        if (chatRoomIdList != null) {
+            for(chatRoomId in chatRoomIdList){
+                var chatRef = db.collection("message").document(chatRoomId)
+                var chatMessageList = mutableListOf<ChatMessage>()
+                chatRef.get().addOnSuccessListener { chatDoc ->
+                    var firebaseData = chatDoc.data?.get(chatRoomId) as? Map<String, Any>?
+                    val messageList = firebaseData?.get("message") as? MutableList<Map<String, Any>>
+                    val receiver = firebaseData?.get("receiver") as? String
+                    val sender = firebaseData?.get("sender") as? String
+
+                    if (messageList != null) {
+                        for(message in messageList){
+                            val isRead = message?.get("isRead") as? Boolean
+                            val messageText = message?.get("messageText") as? String
+                            val sendAt = message?.get("sendAt") as? Timestamp
+                            val sentBy = message?.get("sendAt") as? String
+                            chatMessageList.add(
+                                ChatMessage(
+                                    isRead?:false,
+                                    messageText?:"",
+                                    (sendAt?:System.currentTimeMillis()) as Timestamp,
+                                    sentBy?:"anonymous"
+                                )
+                            )
+                        }
+                    }
+                    var chat = Chat(
+                        chatMessageList,
+                        receiver?:"",
+                        sender?:""
+                    )
+                    chatList.add(chat)
+                    Log.d("Success Chat:", chat.toString())
+                }
+            }
         }
 
-        chatRoomList.add(chatRoomId)
-
-        userInfo = UserInfo(
-            userAutoId,
-            userInfo.friendsList,
-            chatRoomList,
-            userInfo.profileImage
-        )
-
-        val userInfoData = mapOf(
-            nickname!! to userInfo!!
-        )
-        Log.d("updateChatRoomList userInfo:", userInfoData.toString())
+        return chatList
+    }
+    fun sendMessage(chatRoomId: String){
 
 
-        userRef.update(userInfoData as Map<String, Any>)
-            .addOnSuccessListener {
-                println("ChatRoomList updated successfully.")
-            }
-            .addOnFailureListener { error ->
-                println("Error updating ChatRoomList: $error")
-            }
     }
 
 }

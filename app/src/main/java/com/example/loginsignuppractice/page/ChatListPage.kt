@@ -1,14 +1,11 @@
 package com.example.loginsignuppractice.page
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,28 +21,29 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginsignuppractice.R
+import com.example.loginsignuppractice.model.Chat
 import com.example.loginsignuppractice.model.ChatMessage
-import com.example.loginsignuppractice.repository.ChatRepository
+import com.example.loginsignuppractice.repository.FireStoreRepository
 import com.example.loginsignuppractice.viewModel.ChatViewModel
-import com.google.type.Date
-import com.google.type.DateTime
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 
-class ChatListPage {
-    var chatViewModel: ChatViewModel = ChatViewModel()
+
+class ChatListPage(chatViewModel: ChatViewModel) {
+    var chatViewModel = chatViewModel
 
     @Composable
-    fun chatRoomList(list: List<ChatMessage>) {
-        LazyColumn(){
-            items(list){ item: ChatMessage ->  
-                chatRoom("",item)
+    fun chatRoomList() {
+
+
+        LazyColumn() {
+            items(chatViewModel.getChatRoomList()) { item: Chat ->
+                /*item.
+                chatRoom(, item, 1)*/
             }
         }
     }
 
     @Composable
-    fun chatRoom(name: String, chatMessage: ChatMessage) {
+    fun chatRoom(nickname: String, lastMessage: ChatMessage, messageNum: Int) {
         Row(
             modifier = Modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -64,31 +62,31 @@ class ChatListPage {
             Column(
                 modifier = Modifier.weight(10f)
             ) {
-                androidx.compose.material3.Text(
-                    text = name,
+                Text(
+                    text = nickname,
                     style = TextStyle(fontSize = 16.sp),
                     fontWeight = FontWeight.Bold,
 
                     //modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp)
                 )
-                androidx.compose.material3.Text(
-                    text = name,
+                Text(
+                    text = lastMessage.messageText,
                     style = TextStyle(fontSize = 12.sp, color = Color.DarkGray),
                     modifier = Modifier.padding(6.dp),
                     softWrap = true
                 )
             }
             Column(modifier = Modifier.weight(3f)) {
-                androidx.compose.material3.Text(
-                    text = chatMessage.sendAt,
+                Text(
+                    text = lastMessage.sendAt.toString(),
                     style = TextStyle(fontSize = 11.sp, color = Color.DarkGray),
-                    //modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp)
-                )
+
+                    )
                 if (true) {
                     null
                 } else {
-                    androidx.compose.material3.Text(
-                        text = chatMessage.toString(),
+                    Text(
+                        text = messageNum.toString(),
                         style = TextStyle(fontSize = 11.sp, color = Color.White),
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier

@@ -22,13 +22,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
-class AuthRepository(var context: Context) {
+class AuthRepository {
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val _userLiveData = MutableLiveData<FirebaseUser>()
     val userLiveData: LiveData<FirebaseUser>
         get() = _userLiveData
 
     fun getCurrentUser(): FirebaseUser? {
+        Log.d("getCurrentUser autoId",firebaseAuth.currentUser!!.uid )
         return firebaseAuth.currentUser
     }
     fun signUp(
@@ -44,6 +45,7 @@ class AuthRepository(var context: Context) {
             firebaseAuth?.createUserWithEmailAndPassword(email, pw)?.addOnCompleteListener {
                 if (it.isSuccessful) {
                     Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                    Log.d("SignUp autoId", firebaseAuth.currentUser!!.uid)
 
                     navController.navigate(Route.SignIn.routes)
                 } else {
@@ -54,7 +56,7 @@ class AuthRepository(var context: Context) {
             }
         }
 
-        SharedPreferenceUtil().saveString(context = context, "uid", firebaseAuth.currentUser!!.uid)
+        //SharedPreferenceUtil().saveString(context = context, "uid", firebaseAuth.currentUser!!.uid)
     }
 
     fun signIn(navController: NavController, email: String, password: String) {

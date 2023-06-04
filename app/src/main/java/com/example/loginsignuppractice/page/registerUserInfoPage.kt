@@ -26,18 +26,18 @@ import androidx.navigation.NavOptions
 import com.example.loginsignuppractice.R
 import com.example.loginsignuppractice.Route
 import com.example.loginsignuppractice.component.CustomButton
-import com.example.loginsignuppractice.repository.UserRepository
+import com.example.loginsignuppractice.repository.FireStoreRepository
 import com.example.loginsignuppractice.util.imageMap
 
 
 @Composable
-fun registerUserInfoUi(userRepository: UserRepository, navController: NavController) {
+fun registerUserInfoUi(fireStoreRepository: FireStoreRepository, navController: NavController) {
     BasicUi(
         false,
         navController,
         "Register your Information",
         "Please enter your nickname and select your icon",
-        ui = { registerUserInfoContent(userRepository, navController) },
+        ui = { registerUserInfoContent(fireStoreRepository, navController) },
         backAction = {
             navController.popBackStack()
         })
@@ -45,7 +45,7 @@ fun registerUserInfoUi(userRepository: UserRepository, navController: NavControl
 
 
 @Composable
-fun registerUserInfoContent(userRepository: UserRepository, navController: NavController) {
+fun registerUserInfoContent(fireStoreRepository: FireStoreRepository, navController: NavController) {
     var nickname by remember { mutableStateOf(TextFieldValue("")) }
     var profileNum by remember { mutableStateOf(1) }
 
@@ -94,7 +94,7 @@ fun registerUserInfoContent(userRepository: UserRepository, navController: NavCo
 
     Spacer(modifier = Modifier.height(20.dp))
     CustomButton(text = "Register nickname") {
-        userRepository.updateUserInfo("nickname", nickname)
+        fireStoreRepository.updateUserInfo("nickname", nickname.text)
         navController.navigate(
             Route.Main.routes,
             NavOptions.Builder()
